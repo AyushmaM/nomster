@@ -80,3 +80,4 @@ gem 'devise'
 
 gem "geocoder"
 
+gem "figaro"
