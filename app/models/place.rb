@@ -1,6 +1,7 @@
 class Place < ApplicationRecord
 	belongs_to :user
-	validates :name, presence: true
-	validates :address, presence: true
-	validates :description, presence: true
+	geocoded_by :address
+	after_validation :geocode
+	
+	validates :name, :address, :description, presence: true
 end
