@@ -4,26 +4,14 @@
 <br/><br/>
 <p><%= @place.description %></p>
 
-<style>
-  html, body {
-  height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-    #map {
-      height: 100%;
-    }
-  </style>
-  </head>
-  <body>
-  <div id="map"></div>
+<% if @place.latitude.present? && @place.longitude.present? %>
   <script>
 
     function initMap() {
-      var myLatLng = {lat: -25.363, lng: 131.044};
+      var myLatLng = {lat: <%= @place.latitude %>, lng: <%= @place.longitude %>};
 
       var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 4,
+        zoom: 12,
         center: myLatLng
       });
 
@@ -36,8 +24,13 @@
   </script>
 
   <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuIWWIeoQIxrWEgTZtpQ7sU4Y2BujvAiw=initMap">
   </script>
+
+<div id="map"></div>
+<% end %>
+
+<br />
 
 <div class="float-right">
 	<% if current_user && current_user == @place.user %>
