@@ -35,13 +35,16 @@
   </div>
 </div>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Add a comment
-</button>
+<div class="clear"></div>
+
+<% @place.photos.each do |photo| %>
+  <%= image_tag photo.picture.url %>
+  <%= photo.caption %>
+<% end %>
+
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -50,8 +53,7 @@
         </button>
         <h4 class="modal-title" id="myModalLabel">Add a comment</h4>
       </div>
-      <div class="modal-body">
-         <%= simple_form_for @comment, url: place_comments_path(@place) do |f| %>
+       <%= simple_form_for @comment, url: place_comments_path(@place) do |f| %>
         <div class="modal-body">
           <%= f.input :message %>
           <%= f.input :rating, as: :select, collection: Comment::RATINGS %>
@@ -65,47 +67,7 @@
   </div>
 </div>
 
-<div class="col-10 offset-1">
-<h1 class="float-left">Comments</h1>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg float-right" data-toggle="modal" data-target="#myModal">
-  Add a comment
-</button>
-</div>
 
-<div class="clear"></div>
-
-<div class="row">
-  <% @place.comments.each do |comment| %>
-
-    <div class="col-12 col-sm-6">
-      <blockquote>
-        <% if comment.humanized_rating.present? %>
-          <b><%= comment.humanized_rating %></b> -
-        <% end %>
-        <%= comment.message %>
-        <small><%= comment.user.email %></small>
-      </blockquote>
-    </div>
-    
-  <% end %>
-</div>
-
-<div class="clear"></div>
-
-<% @place.photos.each do |photo| %>
-  <%= image_tag photo.picture.url %>
-  <%= photo.caption %>
-<% end %>
-
-<div class="col-10 offset-1">
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg float-right" data-toggle="modal" data-target="#photoModal">
-  Add a photo
-</button>
-</div>
-
-<!-- Modal -->
 <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -125,5 +87,17 @@
       <% end %>
     </div>
   </div>
+</div>
+       
+<div class="col-10 offset-1">
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg float-right" data-toggle="modal" data-target="#commentModal">
+  Add a comment
+</button>
 
-  
+<button type="button" class="btn btn-primary btn-lg float-right" data-toggle="modal" data-target="#photoModal">
+  Add a photo
+</button>
+</div>
+
+<div class="clear"></div>
